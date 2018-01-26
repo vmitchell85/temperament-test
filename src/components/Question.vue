@@ -1,6 +1,9 @@
 <template>
     <div class="question bg-white border-t-4 border-blue" v-if="question">
-        <h4 class="font-normal text-lg px-4 py-2 border-b" v-text="'Question ' + question.no"></h4>
+        <div class="font-normal text-lg px-4 py-2 border-b flex justify-between">
+            <div>Question {{question.no}}</div>
+            <div class="text-xs text-grey-dark uppercase">{{$store.getters.remaining}} Remaining</div>
+        </div>
         <div class="p-2">
             <div v-for="(answer, index) in question.attributes"
                 :key="index"
@@ -48,27 +51,16 @@ export default {
     methods: {
         setSelection(answer) {
             this.selection = answer;
+            this.$store.commit('saveAnswer', {
+                no: this.question.no,
+                selection: this.selection
+            });
         },
         nextQuestion() {
-            if (this.selection) {
-                this.$store.commit('saveAnswer', {
-                    no: this.question.no,
-                    selection: this.selection
-                });
-            }
-
             this.$store.commit('setQuestion', this.question.no + 1);
             this.selection = null;
-
         },
         prevQuestion() {
-            if (this.selection) {
-                this.$store.commit('saveAnswer', {
-                    no: this.question.no,
-                    selection: this.selection
-                });
-            }
-
             this.$store.commit('setQuestion', this.question.no - 1);
             this.selection = null;
         }

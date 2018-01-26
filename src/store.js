@@ -1021,6 +1021,9 @@ export const store = new Vuex.Store({
         },
         answer: state => {
             return state.activeQuestion ? state.answers.find(a => {return a.no == state.activeQuestion.no}) : null;
+        },
+        remaining: state => {
+            return 40 - state.answers.length;
         }
     },
     mutations: {

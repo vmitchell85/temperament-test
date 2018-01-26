@@ -11800,8 +11800,22 @@ Vue.component('Question', __webpack_require__(33));
 var vApp = new Vue({
     el: '#app',
     store: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */],
+    data: function data() {
+        return {
+            showResults: false
+        };
+    },
     mounted: function mounted() {
         this.$store.commit('setQuestion', 1);
+    },
+
+    methods: {
+        fakeIt: function fakeIt() {
+            var vThis = this;
+            this.$store.state.questions.forEach(function (q) {
+                vThis.$store.commit('saveAnswer', { no: q.no, selection: { no: q.no, value: "C" } });
+            });
+        }
     }
 });
 
@@ -13146,6 +13160,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -13170,26 +13187,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         setSelection: function setSelection(answer) {
             this.selection = answer;
+            this.$store.commit('saveAnswer', {
+                no: this.question.no,
+                selection: this.selection
+            });
         },
         nextQuestion: function nextQuestion() {
-            if (this.selection) {
-                this.$store.commit('saveAnswer', {
-                    no: this.question.no,
-                    selection: this.selection
-                });
-            }
-
             this.$store.commit('setQuestion', this.question.no + 1);
             this.selection = null;
         },
         prevQuestion: function prevQuestion() {
-            if (this.selection) {
-                this.$store.commit('saveAnswer', {
-                    no: this.question.no,
-                    selection: this.selection
-                });
-            }
-
             this.$store.commit('setQuestion', this.question.no - 1);
             this.selection = null;
         }
@@ -13206,10 +13213,20 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.question
     ? _c("div", { staticClass: "question bg-white border-t-4 border-blue" }, [
-        _c("h4", {
-          staticClass: "font-normal text-lg px-4 py-2 border-b",
-          domProps: { textContent: _vm._s("Question " + _vm.question.no) }
-        }),
+        _c(
+          "div",
+          {
+            staticClass:
+              "font-normal text-lg px-4 py-2 border-b flex justify-between"
+          },
+          [
+            _c("div", [_vm._v("Question " + _vm._s(_vm.question.no))]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-xs text-grey-dark uppercase" }, [
+              _vm._v(_vm._s(_vm.$store.getters.remaining) + " Remaining")
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -14129,6 +14146,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             return state.activeQuestion ? state.answers.find(function (a) {
                 return a.no == state.activeQuestion.no;
             }) : null;
+        },
+        remaining: function remaining(state) {
+            return 40 - state.answers.length;
         }
     },
     mutations: {

@@ -10,13 +10,15 @@
 <body class="bg-blue-lightest">
     <div id="app">
         <div class="w-1/2 mx-auto mt-8">
-            <button class="bg-red px-4 py-2" @click="$store.commit('setQuestion', 1)">Go</button>
+            <button class="bg-red px-4 py-2" @click="fakeIt">Go</button>
             <br>
             <br>
             <br>
             <br>
-            <question :question="$store.state.activeQuestion" :answer="$store.getters.answer"></question>
-            {{$store.getters.results}}
+            <question :question="$store.state.activeQuestion" :answer="$store.getters.answer" v-show="!showResults"></question>
+            <div class="mt-8 text-center" v-if="$store.getters.remaining == 0 && !showResults">
+                <button class="bg-blue text-white px-4 py-2 rounded" @click="showResults = true">See Results</button>
+            </div>
         </div>
     </div>
     <script src="dist/app.js"></script>
