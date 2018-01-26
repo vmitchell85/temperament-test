@@ -15,7 +15,7 @@
                  This Temperament Test is made up of 40 groups of terms, consisting of four choices each. Read the four choices in each group,
                 and then click the choice that best describes you. When you have chosen a term for each of the 40 groups, click the "See Results" button.
             </div>
-            <question :question="$store.state.activeQuestion" :answer="$store.getters.answer" v-show="!showResults"></question>
+            <question :question="$store.state.activeQuestion" :answer="$store.getters.answer" v-if="!showResults"></question>
             <div class="mt-8 text-center" v-if="$store.getters.remaining == 0 && !showResults">
                 <button class="bg-blue text-white px-4 py-2 rounded" @click="showResults = true">See Results</button>
             </div>
