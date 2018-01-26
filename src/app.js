@@ -19,9 +19,16 @@ var vApp = new Vue({
     methods: {
         fakeIt() {
             var vThis = this;
+            var options = ["P", "M", "S", "C"];
+
             this.$store.state.questions.forEach(q => {
-                vThis.$store.commit('saveAnswer', {no: q.no, selection: {no: q.no, value: "C"}});
+                var randomValue = options[Math.floor(Math.random() * options.length)];
+                vThis.$store.commit('saveAnswer', { no: q.no, selection: { no: q.no, value: randomValue}});
             });
+        },
+        resetForm() {
+            this.showResults = false;
+            this.$store.commit('resetForm');
         }
     }
 });

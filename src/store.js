@@ -1027,6 +1027,9 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
+        resetForm(state) {
+            state.answers = [];
+        },
         setQuestion(state, number) {
             state.activeQuestion = state.questions.find(q => {return q.no == number });
         },

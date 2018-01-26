@@ -10,16 +10,30 @@
 <body class="bg-blue-lightest">
     <div id="app">
         <div class="w-1/2 mx-auto mt-8">
-            <button class="bg-red px-4 py-2" @click="fakeIt">Go</button>
-            <br>
-            <br>
-            <br>
-            <br>
+            <div class="text-2xl">Temperament Test</div>
+            <div class="text-normal leading-normal text-grey-darker m-4">
+                 This Temperament Test is made up of 40 groups of terms, consisting of four choices each. Read the four choices in each group,
+                and then click the choice that best describes you. When you have chosen a term for each of the 40 groups, click the "See Results" button.
+            </div>
             <question :question="$store.state.activeQuestion" :answer="$store.getters.answer" v-show="!showResults"></question>
             <div class="mt-8 text-center" v-if="$store.getters.remaining == 0 && !showResults">
                 <button class="bg-blue text-white px-4 py-2 rounded" @click="showResults = true">See Results</button>
             </div>
+            <div class="bg-white border-t-4 border-blue mt-8 shadow-md" v-if="showResults">
+                <div class="font-normal text-lg px-4 py-2 border-b flex justify-between">Results</div>
+                <div class="p-4 flex" v-for="(result, label) in $store.getters.results">
+                    <div class="w-1/5" v-text="label"></div>
+                    <div class="flex-grow">
+                        <div class="bg-blue p-2 rounded-full" :style="'width:' + (result/40 * 100) + '%'"></div>
+                    </div>
+                    <div class="ml-2" v-text="result"></div>
+                </div>
+                <div class="px-4 py-2 text-center border-t">
+                    <button class="bg-blue text-white px-4 py-2 rounded" @click="resetForm">Reset Form</button>
+                </div>
+            </div>
         </div>
+        <button class="bg-red px-4 py-2" @click="fakeIt">Go</button>
     </div>
     <script src="dist/app.js"></script>
 </body>

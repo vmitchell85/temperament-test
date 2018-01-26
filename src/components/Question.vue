@@ -1,5 +1,5 @@
 <template>
-    <div class="question bg-white border-t-4 border-blue" v-if="question">
+    <div class="question bg-white border-t-4 border-blue shadow-md" v-if="question">
         <div class="font-normal text-lg px-4 py-2 border-b flex justify-between">
             <div>Question {{question.no}}</div>
             <div class="text-xs text-grey-dark uppercase">{{$store.getters.remaining}} Remaining</div>
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-4 py-2 flex justify-between">
+        <div class="px-4 py-2 flex justify-between border-t">
             <button v-if="question.no !== 1" class="px-4 py-2 rounded bg-blue-light text-grey-lightest" @click="prevQuestion">Previous Question</button>
             <div v-else></div>
             <button v-if="question.no !== 40" class="px-4 py-2 rounded bg-blue-light text-grey-lightest" @click="nextQuestion">Next Question</button>

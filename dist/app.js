@@ -11812,9 +11812,16 @@ var vApp = new Vue({
     methods: {
         fakeIt: function fakeIt() {
             var vThis = this;
+            var options = ["P", "M", "S", "C"];
+
             this.$store.state.questions.forEach(function (q) {
-                vThis.$store.commit('saveAnswer', { no: q.no, selection: { no: q.no, value: "C" } });
+                var randomValue = options[Math.floor(Math.random() * options.length)];
+                vThis.$store.commit('saveAnswer', { no: q.no, selection: { no: q.no, value: randomValue } });
             });
+        },
+        resetForm: function resetForm() {
+            this.showResults = false;
+            this.$store.commit('resetForm');
         }
     }
 });
@@ -13212,127 +13219,135 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.question
-    ? _c("div", { staticClass: "question bg-white border-t-4 border-blue" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "font-normal text-lg px-4 py-2 border-b flex justify-between"
-          },
-          [
-            _c("div", [_vm._v("Question " + _vm._s(_vm.question.no))]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-xs text-grey-dark uppercase" }, [
-              _vm._v(_vm._s(_vm.$store.getters.remaining) + " Remaining")
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "p-2" },
-          _vm._l(_vm.question.attributes, function(answer, index) {
-            return _c(
-              "div",
-              {
-                key: index,
-                staticClass: "flex mb-2 p-2 rounded-lg cursor-pointer",
-                class: { "bg-grey-lighter": _vm.selection == answer },
-                on: {
-                  click: function($event) {
-                    _vm.setSelection(answer)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "pr-2" }, [
-                  _vm.selection == answer
-                    ? _c(
-                        "svg",
-                        {
-                          staticClass: "w-6 h-6 fill-current text-green-dark",
-                          attrs: {
-                            "aria-hidden": "true",
-                            role: "img",
-                            xmlns: "http://www.w3.org/2000/svg",
-                            viewBox: "0 0 512 512"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            attrs: {
-                              fill: "currentColor",
-                              d:
-                                "M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z"
-                            }
-                          })
-                        ]
-                      )
-                    : _c(
-                        "svg",
-                        {
-                          staticClass: "w-6 h-6 fill-current",
-                          attrs: {
-                            "aria-hidden": "true",
-                            role: "img",
-                            xmlns: "http://www.w3.org/2000/svg",
-                            viewBox: "0 0 512 512"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            attrs: {
-                              fill: "currentColor",
-                              d:
-                                "M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
-                            }
-                          })
-                        ]
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", {}, [
-                  _c("h5", {
-                    staticClass: "text-lg font-normal text-grey-darkest",
-                    domProps: { textContent: _vm._s(answer.text) }
-                  }),
-                  _vm._v(" "),
-                  _c("p", {
-                    staticClass: "ml-4 text-grey-darker",
-                    domProps: { textContent: _vm._s(answer.description) }
-                  })
-                ])
-              ]
-            )
-          })
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "px-4 py-2 flex justify-between" }, [
-          _vm.question.no !== 1
-            ? _c(
-                "button",
-                {
-                  staticClass:
-                    "px-4 py-2 rounded bg-blue-light text-grey-lightest",
-                  on: { click: _vm.prevQuestion }
-                },
-                [_vm._v("Previous Question")]
-              )
-            : _c("div"),
+    ? _c(
+        "div",
+        { staticClass: "question bg-white border-t-4 border-blue shadow-md" },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "font-normal text-lg px-4 py-2 border-b flex justify-between"
+            },
+            [
+              _c("div", [_vm._v("Question " + _vm._s(_vm.question.no))]),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-xs text-grey-dark uppercase" }, [
+                _vm._v(_vm._s(_vm.$store.getters.remaining) + " Remaining")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _vm.question.no !== 40
-            ? _c(
-                "button",
+          _c(
+            "div",
+            { staticClass: "p-2" },
+            _vm._l(_vm.question.attributes, function(answer, index) {
+              return _c(
+                "div",
                 {
-                  staticClass:
-                    "px-4 py-2 rounded bg-blue-light text-grey-lightest",
-                  on: { click: _vm.nextQuestion }
+                  key: index,
+                  staticClass: "flex mb-2 p-2 rounded-lg cursor-pointer",
+                  class: { "bg-grey-lighter": _vm.selection == answer },
+                  on: {
+                    click: function($event) {
+                      _vm.setSelection(answer)
+                    }
+                  }
                 },
-                [_vm._v("Next Question")]
+                [
+                  _c("div", { staticClass: "pr-2" }, [
+                    _vm.selection == answer
+                      ? _c(
+                          "svg",
+                          {
+                            staticClass: "w-6 h-6 fill-current text-green-dark",
+                            attrs: {
+                              "aria-hidden": "true",
+                              role: "img",
+                              xmlns: "http://www.w3.org/2000/svg",
+                              viewBox: "0 0 512 512"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                fill: "currentColor",
+                                d:
+                                  "M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z"
+                              }
+                            })
+                          ]
+                        )
+                      : _c(
+                          "svg",
+                          {
+                            staticClass: "w-6 h-6 fill-current",
+                            attrs: {
+                              "aria-hidden": "true",
+                              role: "img",
+                              xmlns: "http://www.w3.org/2000/svg",
+                              viewBox: "0 0 512 512"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                fill: "currentColor",
+                                d:
+                                  "M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
+                              }
+                            })
+                          ]
+                        )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", {}, [
+                    _c("h5", {
+                      staticClass: "text-lg font-normal text-grey-darkest",
+                      domProps: { textContent: _vm._s(answer.text) }
+                    }),
+                    _vm._v(" "),
+                    _c("p", {
+                      staticClass: "ml-4 text-grey-darker",
+                      domProps: { textContent: _vm._s(answer.description) }
+                    })
+                  ])
+                ]
               )
-            : _c("div")
-        ])
-      ])
+            })
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "px-4 py-2 flex justify-between border-t" },
+            [
+              _vm.question.no !== 1
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "px-4 py-2 rounded bg-blue-light text-grey-lightest",
+                      on: { click: _vm.prevQuestion }
+                    },
+                    [_vm._v("Previous Question")]
+                  )
+                : _c("div"),
+              _vm._v(" "),
+              _vm.question.no !== 40
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "px-4 py-2 rounded bg-blue-light text-grey-lightest",
+                      on: { click: _vm.nextQuestion }
+                    },
+                    [_vm._v("Next Question")]
+                  )
+                : _c("div")
+            ]
+          )
+        ]
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -14152,6 +14167,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         }
     },
     mutations: {
+        resetForm: function resetForm(state) {
+            state.answers = [];
+        },
         setQuestion: function setQuestion(state, number) {
             state.activeQuestion = state.questions.find(function (q) {
                 return q.no == number;
