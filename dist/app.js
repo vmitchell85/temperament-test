@@ -11818,6 +11818,7 @@ var vApp = new Vue({
                 var randomValue = options[Math.floor(Math.random() * options.length)];
                 vThis.$store.commit('saveAnswer', { no: q.no, selection: { no: q.no, value: randomValue } });
             });
+            this.showResults = true;
         },
         resetForm: function resetForm() {
             this.showResults = false;
