@@ -1006,6 +1006,38 @@ export const store = new Vuex.Store({
                     }
                 ]
             }
-        ]
+        ],
+        answers: [],
+        activeQuestion: null
+    },
+    getters: {
+        results: state => {
+            return {
+                'Melancholy': state.answers.filter(a => { return a.value == "M"; }).length,
+                'Sanguine': state.answers.filter(a => { return a.value == "S"; }).length,
+                'Choleric': state.answers.filter(a => { return a.value == "C"; }).length,
+                'Phlegmatic': state.answers.filter(a => { return a.value == "P"; }).length,
+            }
+        },
+        answer: state => {
+            return state.activeQuestion ? state.answers.find(a => {return a.no == state.activeQuestion.no}) : null;
+        }
+    },
+    mutations: {
+        setQuestion(state, number) {
+            state.activeQuestion = state.questions.find(q => {return q.no == number });
+        },
+        saveAnswer(state, data) {
+            var matchingEntry = state.answers.find(a => {return a.no == data.no});
+
+            if (matchingEntry) {
+                matchingEntry.value = data.selection.value
+            } else {
+                state.answers.push({
+                    no: data.no,
+                    value: data.selection.value
+                });
+            }
+        }
     }
 });

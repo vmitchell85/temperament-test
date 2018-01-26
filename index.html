@@ -7,9 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="dist/app.css" />
 </head>
-<body>
+<body class="bg-blue-lightest">
     <div id="app">
-        <h1>HEllo World</h1>
+        <div class="w-1/2 mx-auto mt-8">
+            <button class="bg-red px-4 py-2" @click="$store.commit('setQuestion', 1)">Go</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <question :question="$store.state.activeQuestion" :answer="$store.getters.answer"></question>
+            {{$store.getters.results}}
+        </div>
     </div>
     <script src="dist/app.js"></script>
 </body>
