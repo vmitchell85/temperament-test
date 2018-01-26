@@ -9,13 +9,13 @@
 </head>
 <body>
     <div id="app">
-        <div class="w-1/2 mx-auto mt-8">
+        <div class="w-full md:w-3/4 lg:w-1/2 mx-auto mt-8">
             <div class="text-2xl">Temperament Test</div>
             <div class="text-normal leading-normal text-grey-darker m-4">
                  This Temperament Test is made up of 40 groups of terms, consisting of four choices each. Read the four choices in each group,
                 and then click the choice that best describes you. When you have chosen a term for each of the 40 groups, click the "See Results" button.
             </div>
-            <div class="text-right mb-1">
+            <div class="text-right mb-1 mx-2 md:mx-0">
                 <button class="text-grey-darker rounded-lg text-xs" @click="fakeIt">See Example Results</button>
             </div>
             <question :question="$store.state.activeQuestion" :answer="$store.getters.answer" v-if="!showResults"></question>

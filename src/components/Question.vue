@@ -1,5 +1,5 @@
 <template>
-    <div class="question bg-white border-t-4 border-blue shadow-md" v-if="question">
+    <div class="question bg-white border-t-4 border-blue shadow-md mx-2 md:mx-0" v-if="question">
         <div class="font-normal text-lg px-4 py-2 border-b flex justify-between">
             <div>Question {{question.no}}</div>
             <div class="text-xs text-grey-dark uppercase">{{$store.getters.remaining}} Remaining</div>
@@ -16,8 +16,8 @@
                     <svg v-else aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-current"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z" class=""></path></svg>
                 </div>
                 <div class="">
-                    <h5 class="text-lg font-normal text-grey-darkest" v-text="answer.text"></h5>
-                    <p class="ml-4 text-grey-darker" v-text="answer.description"></p>
+                    <h5 class="text-base md:text-lg font-normal text-grey-darkest" v-text="answer.text"></h5>
+                    <p class="text-sm md:text-base ml-4 text-grey-darker" v-text="answer.description"></p>
                 </div>
             </div>
         </div>

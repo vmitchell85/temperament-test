@@ -13222,7 +13222,10 @@ var render = function() {
   return _vm.question
     ? _c(
         "div",
-        { staticClass: "question bg-white border-t-4 border-blue shadow-md" },
+        {
+          staticClass:
+            "question bg-white border-t-4 border-blue shadow-md mx-2 md:mx-0"
+        },
         [
           _c(
             "div",
@@ -13304,12 +13307,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", {}, [
                     _c("h5", {
-                      staticClass: "text-lg font-normal text-grey-darkest",
+                      staticClass:
+                        "text-base md:text-lg font-normal text-grey-darkest",
                       domProps: { textContent: _vm._s(answer.text) }
                     }),
                     _vm._v(" "),
                     _c("p", {
-                      staticClass: "ml-4 text-grey-darker",
+                      staticClass: "text-sm md:text-base ml-4 text-grey-darker",
                       domProps: { textContent: _vm._s(answer.description) }
                     })
                   ])
