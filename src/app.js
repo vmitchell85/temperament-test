@@ -13,6 +13,11 @@ var vApp = new Vue({
             showResults: false
         }
     },
+    mounted() {
+        if (!this.$store.state.activeQuestion) {
+            this.$store.commit('setQuestion', 1);
+        }
+    },
     methods: {
         fakeIt() {
             var vThis = this;
