@@ -12,7 +12,7 @@
                 :class="{'bg-grey-lighter' : selection == answer}"
             >
                 <div class="pr-2">
-                    <svg v-if="selection == answer" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-current text-green-dark"><path fill="currentColor" d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z" class=""></path></svg>
+                    <svg v-if="selection && answer && selection.value  == answer.value" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-current text-green-dark"><path fill="currentColor" d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z" class=""></path></svg>
                     <svg v-else aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-current"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z" class=""></path></svg>
                 </div>
                 <div class="">
@@ -39,6 +39,39 @@ export default {
     data() {
         return {
             selection: null
+        }
+    },
+    mounted() {
+        var vThis = this;
+        document.onkeydown = function(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            switch (code) {
+                case 49:
+                    vThis.setSelection(vThis.question.attributes[0]);
+                    break;
+                case 50:
+                    vThis.setSelection(vThis.question.attributes[1]);
+                    break;
+                case 51:
+                    vThis.setSelection(vThis.question.attributes[2]);
+                    break;
+                case 52:
+                    vThis.setSelection(vThis.question.attributes[3]);
+                    break;
+                case 39:
+                    if (vThis.question.no !== 40) {
+                        vThis.nextQuestion();
+                    }
+                    break;
+                case 37:
+                    if (vThis.question.no !== 1) {
+                        vThis.prevQuestion();
+                    }
+                    break;
+            }
+        };
+        if (this.answer) {
+            this.selection = this.question.attributes.find(a => {return a.value == this.answer.value});
         }
     },
     watch: {
